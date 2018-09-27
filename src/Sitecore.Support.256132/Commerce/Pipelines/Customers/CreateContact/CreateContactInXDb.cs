@@ -1,9 +1,4 @@
-﻿using System;
-using System.Linq;
-using Sitecore.Analytics;
-using Sitecore.Analytics.Model;
-using Sitecore.Analytics.Model.Entities;
-using Sitecore.Commerce.Data.Customers;
+﻿using Sitecore.Commerce.Data.Customers;
 using Sitecore.Commerce.Entities;
 using Sitecore.Commerce.Pipelines;
 using Sitecore.Commerce.Services.Customers;
@@ -23,13 +18,6 @@ namespace Sitecore.Support.Commerce.Pipelines.Customers.CreateContact
       {
         string userIdentifier = this.GetUserIdentifier(result);
         this.CreateContact(userIdentifier, result);
-        ContactIdentifier identifier = (from x in Tracker.Current.Contact.Identifiers
-                                        where x.Source.Equals("CommerceUser")
-                                        select x).FirstOrDefault<ContactIdentifier>();
-        if ((identifier != null) && ((identifier.Type == ContactIdentificationLevel.Anonymous) || !string.Equals(userIdentifier, identifier.Identifier, StringComparison.OrdinalIgnoreCase)))
-        {
-          Tracker.Current.Session.IdentifyAs(userIdentifier, identifier.Identifier);
-        }
       }
 
     }
